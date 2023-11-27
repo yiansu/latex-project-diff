@@ -10,6 +10,9 @@ NEW_PROJECT_DIR=${2}
 DIFF_PROJECT_DIR=${3}
 ENTRY_DOCUMENT=${4}
 
+# latexdiff flags
+LATEXDIFF_FLAGS="--flatten -p preamble.tex"
+
 # clone the diff project from the new project
 rm -rf ${DIFF_PROJECT_DIR} ;
 cp -r ${NEW_PROJECT_DIR} ${DIFF_PROJECT_DIR} ;
@@ -31,7 +34,7 @@ popd &> /dev/null ;
 
 # run latexdiff on entry document and bbl files
 # reference: https://tex.stackexchange.com/questions/167064/latexdiff-changes-in-bibliography-with-biblatex-and-biber
-latexdiff --flatten ${OLD_PROJECT_DIR}/${ENTRY_DOCUMENT}.tex ${NEW_PROJECT_DIR}/${ENTRY_DOCUMENT}.tex > ${DIFF_PROJECT_DIR}/${ENTRY_DOCUMENT}-diff.tex ;
+latexdiff ${LATEXDIFF_FLAGS} ${OLD_PROJECT_DIR}/${ENTRY_DOCUMENT}.tex ${NEW_PROJECT_DIR}/${ENTRY_DOCUMENT}.tex > ${DIFF_PROJECT_DIR}/${ENTRY_DOCUMENT}-diff.tex ;
 latexdiff ${OLD_PROJECT_DIR}/${ENTRY_DOCUMENT}.bbl ${NEW_PROJECT_DIR}/${ENTRY_DOCUMENT}.bbl > ${DIFF_PROJECT_DIR}/${ENTRY_DOCUMENT}-diff.bbl ;
 
 # generate the final diff pdf
@@ -39,4 +42,4 @@ pdflatex -output-directory=${DIFF_PROJECT_DIR} -interaction=nonstopmode ${DIFF_P
 pdflatex -output-directory=${DIFF_PROJECT_DIR} -interaction=nonstopmode ${DIFF_PROJECT_DIR}/${ENTRY_DOCUMENT}-diff.tex &> /dev/null ;
 
 # open the final diff pdf
-# open ${DIFF_PROJECT_DIR}/${ENTRY_DOCUMENT}-diff.pdf ;
+open ${DIFF_PROJECT_DIR}/${ENTRY_DOCUMENT}-diff.pdf ;

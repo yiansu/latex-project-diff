@@ -11,7 +11,8 @@ DIFF_PROJECT_DIR=${3}
 ENTRY_DOCUMENT=${4}
 
 # latexdiff flags
-LATEXDIFF_FLAGS="--flatten -p preamble.tex"
+# LATEXDIFF_FLAGS="--flatten -p preamble.tex"
+LATEXDIFF_FLAGS="--flatten"
 
 # clone the diff project from the new project
 rm -rf ${DIFF_PROJECT_DIR} ;
